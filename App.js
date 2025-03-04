@@ -12,7 +12,7 @@ const App =()=>{
   return (
   <NavigationContainer>
       <Stack.Navigator initialRouteName="SearchBusiness">  
-        <Stack.Screen name="SearchBusiness"  component={SearchScreen} options={{ title: "Search for Businesses" }}  />
+        <Stack.Screen name="SearchBusiness"  component={SearchScreen} options={{ title: "Search food by Area" }}  />
         
       </Stack.Navigator>
     </NavigationContainer>
