@@ -1,8 +1,9 @@
 import React from "react";
-import {View, TextInput, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Feather} from '@expo/vector-icons';
 
 const SearchBar =(props) =>{
+    console.log(props);
     return(
         <View style={styles.backGroundStyle}>
             <Feather style={styles.iconStyle} name="search" />
@@ -13,12 +14,13 @@ const SearchBar =(props) =>{
                 value = {props.term}
                 onEndEditing={(newTerm)=>props.onTermSubmitted()}
                 onChangeText={(newTerm)=>props.onSearchTerm(newTerm)}
+ 
             /> 
         </View>
 
     );
 
-}
+}         
 
 const styles = StyleSheet.create({
     backGroundStyle :{
@@ -26,7 +28,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#F0EEEE',
         marginTop:10,
         height:50,
-        marginHorizontal:50,
+        marginLeft:15,
         borderRadius:5
     },
     iconStyle :{

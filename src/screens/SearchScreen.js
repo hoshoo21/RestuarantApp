@@ -1,53 +1,49 @@
-import React,{useState,useEffect} from "react";
+import React,{useState} from "react";
 import {View, Text, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import Toast from "react-native-toast-message";
 import SearchBar from '../components/SearchBar';
-import Http from "../api/Http";
+import useResults from "../hooks/useResults";
+import ResultList from "../components/ResultList";
+import UseResults from "../hooks/useResults";
 const SearchScreen = (props)=>{
+    const [search, results, errorMessage,setErrorMessage] = useResults(); 
     const [term, setTerm] = useState('');
-    const [results, setResults] = useState([]);
-    const [errorMessage, setErrorMessage] = useState('');
+    const findByPrice = (price)=> results.filter((business)=> business.localized_price== price);  
+    const handleSearchTerm =async (newValue )=>{
+       setTerm(newValue);
+       // await search(newValue); 
+       console.log(newValue);
+    } 
+    const handleTermSubmited =(newTerm)=>{
+        console.log(newTerm);
+         setTerm(newTerm)
+       search(term); 
     
-    useEffect(
-        ()=>{search('indian')},
-        []
-    )
+    }
+    const filterByCategroy= (categpry)=>{
 
-    const search =async (searchTerm)=>{
-       
-       try{
-        const response = await  Http.get(`/filter.php?a=${term}`);
-        console.log(response.data);
-        setResults(response.data.meals);
-       } 
-       catch(err){
-        setErrorMessage('Something Went Wrong');        
-       }
-       
     }
- 
-    const handleSearchTerm =(newValue )=>{
-        setTerm(newValue);
-    }
-    const handleTermSubmited =()=>{
-        search('indian');
-    }
+
     return (
-        <View style ={{flex:1}}>
-            <SearchBar term={term} onTermSubmitted   ={handleTermSubmited} onSearchTerm = {handleSearchTerm} />
-            
-            {
-                errorMessage.length<=0?
-              
-                <Text>We have found {  results? results.length: 0 }</Text>
-                : 
-                <TouchableOpacity style ={{top:'70%'}}  onPress={()=>{setErrorMessage('')}}>
-                    <View style={styles.container}>
-                        <Text style={styles.text}>{errorMessage}</Text>
-                    </View>
-                </TouchableOpacity>
-            }
-            
+       <View style ={{flex:1}}>
+               <SearchBar term={term} onTermSubmitted   ={handleTermSubmited} onSearchTerm = {handleSearchTerm} />
+                    
+                
+                    {
+                        errorMessage.length<=0?
+                    
+                        <Text style={{marginLeft:20}}>We have found {  results? results.length: 0 }</Text>
+                        : 
+                        <TouchableOpacity style ={{top:'70%'}}  onPress={()=>{setErrorMessage('')}}>
+                            <View style={styles.container}>
+                                <Text style={styles.text}>{errorMessage}</Text>
+                            </View>
+                        </TouchableOpacity>
+                }
+                <ResultList title = "Cost Effective" businessResults = {findByPrice('€')} />
+                <ResultList title = "Bit Pricies" businessResults = {findByPrice('€€')} />
+                <ResultList title = "Big Spender" businessResults = {findByPrice('€€€')} />
+                <ResultList title = "Expensive" businessResults = {findByPrice('€€€€')} />
         </View>
         
 
@@ -56,6 +52,8 @@ const SearchScreen = (props)=>{
 }
 
 const styles = StyleSheet.create({
+    
+    
     container: {
          // Ensures the message stays at the bottom
         top :'80%' ,
@@ -70,7 +68,6 @@ const styles = StyleSheet.create({
         width: "90%",    
       },
       text: {
-        color: "white",
         fontSize: 16,
         fontWeight: "bold",
       },
