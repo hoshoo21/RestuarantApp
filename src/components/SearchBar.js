@@ -3,7 +3,6 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Feather} from '@expo/vector-icons';
 
 const SearchBar =(props) =>{
-    console.log(props);
     return(
         <View style={styles.backGroundStyle}>
             <Feather style={styles.iconStyle} name="search" />

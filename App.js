@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import SearchScreen from './src/screens/SearchScreen';
+import Restuarant from './src/components/Restuarant';
 
 
 const Stack = createNativeStackNavigator();
@@ -13,6 +14,7 @@ const App =()=>{
   <NavigationContainer>
       <Stack.Navigator initialRouteName="SearchBusiness">  
         <Stack.Screen name="SearchBusiness"  component={SearchScreen} options={{ title: "Search food by Area" }}  />
+        <Stack.Screen name="RestaruantDetails"  component={Restuarant} options={{ title: "Search food by Area" }}  />
         
       </Stack.Navigator>
     </NavigationContainer>

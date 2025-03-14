@@ -1,9 +1,12 @@
 import React from 'react';
-import {View,Text,StyleSheet,FlatList} from 'react-native';
+import {View,Text,StyleSheet,FlatList, TouchableOpacity} from 'react-native';
 import ResturantDetails from './ResturantDetails';
-
+import {useNavigation} from '@react-navigation/native';
 
 const ResultList =(props)=>{
+    const navigation = useNavigation();
+    if (props.businessResults.length ==0)
+        return null
     return (
         <View style={styles.resultContainer}>
             <Text style={styles.titleStyle}>  {props.title} </Text>
@@ -13,7 +16,11 @@ const ResultList =(props)=>{
                 data = {props.businessResults}
                 keyExtractor={(business)=>business.id}
                 renderItem ={({item})=>{
-                    return <ResturantDetails ResturantDetail = {item} />
+                    return( 
+                        <TouchableOpacity onPress={()=> {navigation.navigate("RestaruantDetails",{alias: item.alias})}}>
+                            <ResturantDetails ResturantDetail = {item} />
+                       </TouchableOpacity>
+                    )
                 }}
             />
 
@@ -21,6 +28,7 @@ const ResultList =(props)=>{
     );
 
 }
+
 
 const styles = StyleSheet.create({
     resultContainer :{
