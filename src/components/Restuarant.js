@@ -50,8 +50,9 @@ const Restuarant = (props)=> {
     }
     
     return (
-        <View>
-            <Text>  {resturantDetail.name} </Text>
+        <View style={styles.viewStyle}>
+            <Text style ={styles.textSyle}>  {resturantDetail.name} </Text>
+
             <FlatList 
                 data = {resturantDetail.photos}
                 keyExtractor={(photo)=> photo.id}
@@ -66,9 +67,20 @@ const Restuarant = (props)=> {
 }
 
 const styles = StyleSheet.create({  
+    viewStyle : {
+         alignItems: 'center', 
+         justifyContent: 'center', 
+         flex: 1 
+    },
     imageStyle : {
         width : 300,
         height : 200,
+    },
+    textSyle :{
+        fontWeight:'900',
+        fontSize:24,
+       
+
     }
 
 });
